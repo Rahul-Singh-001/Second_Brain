@@ -116,7 +116,9 @@ export const Card :React.FC<Cardprops>=({
     return null
   }
    return(
-     <div className=""
+     <div className="content-card hover:shadow-lg transition-all duration-200">
+        <
+     </div>
    )
 }
  
