@@ -1,7 +1,8 @@
 import { sizeIconVariant, type IconProps } from "./sizeInteface"
 
 export const Twittericon=(props:IconProps)=>{
-    return <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" className={`bi bi-twitter-x  ${sizeIconVariant[props.size]}`} viewBox="-2 -2 20 20" id="Twitter-X--Streamline-Bootstrap" height="20" width="20">
+    return <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+ className={`bi bi-twitter-x  ${sizeIconVariant[props.size]}`} viewBox="-2 -2 20 20" id="Twitter-X--Streamline-Bootstrap" height="20" width="20">
   <desc>
     Twitter X Streamline Icon: https://streamlinehq.com
   </desc>

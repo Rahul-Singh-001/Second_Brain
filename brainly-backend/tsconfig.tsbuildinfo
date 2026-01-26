@@ -1,1 +1,1 @@
-{"root":["./src/config.ts","./src/db.ts","./src/index.ts","./src/middleware.ts","./src/utils.ts"],"version":"5.9.3"}
+{"root":["./src/index.ts","./src/config/env.ts","./src/controllers/contentcontrollers.ts","./src/controllers/usercontroller.ts","./src/middleware/authmiddleware.ts","./src/middleware/errormiddleware.ts","./src/models/db.ts","./src/routes/contentroutes.ts","./src/routes/publicroutes.ts","./src/routes/userroutes.ts","./src/types/express.d.ts","./src/utils/random.ts"],"version":"5.9.3"}

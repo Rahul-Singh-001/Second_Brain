@@ -1,3 +1,4 @@
+import { ContentCard } from "@/components/ContentCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/ui/themetoggle";

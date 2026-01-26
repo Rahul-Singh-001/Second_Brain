@@ -1,34 +1,35 @@
-// import { useState } from 'react'
-
-import { DeleteIcon, Share2 } from "lucide-react"
-import { Twittericon } from "./icons/twittericon"
-
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "sonner";
+import { HomePage } from "@/pages/Dashboard";
+import { AuthPage } from "./pages/AuthPage";
+import { SharePage } from "./pages/SharePage";
+import { ProtectedRoute } from "@/components/protectedRoute";
+import { PublicRoute } from "./components/PublicRoute";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
   return (
-    <div className="min-h-screen bg-pink-600 ">
-    <div className="bg-orange-500 text-white border rounded-md shadow-md hover:shadow-2xl w-72">
-         <div className="flex justify-around items-center">
-            <div className="flex p-1 text-white gap-2">
-            <Twittericon size="lg"/>
-            <span className="border rounded-lg px-1  "> twitter</span>
-            </div>
-            <div className="flex gap-2">
-              <DeleteIcon />
-               <Share2/>
-            </div>
-     </div>
-      <div className="border m-1 h-20 rounded-sm p-1">
-         content in
-      </div>
-      <div className="flex justify-end p-1">
-           mm/dd/yy
-      </div>
+    <>
+      <BrowserRouter>
+        <ThemeProvider>
+          <Routes>
+            <Route path="/brain/:shareHash" element={<SharePage />} />
 
-    </div>
-    </div>
-  )
+            <Route element={<PublicRoute />}>
+              <Route path="/auth" element={<AuthPage />} />
+            </Route>
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<HomePage />} />
+            </Route>
+
+          </Routes>
+        </ThemeProvider>
+      </BrowserRouter>
+
+      <Toaster richColors={false} position="bottom-right" />
+    </>
+  );
 }
 
-export default App
+export default App;

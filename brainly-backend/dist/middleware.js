@@ -1,6 +1,6 @@
 import {} from "express";
 import jwt from "jsonwebtoken";
-import { JWT_PASSWORD } from "./config.js";
+import { JWT_PASSWORD } from "./config";
 export const userMiddleware = (req, res, next) => {
     const header = req.headers["authorization"];
     const decoded = jwt.verify(header, JWT_PASSWORD);
