@@ -7,7 +7,7 @@ export function useContent(){
       useEffect(()=>{
           axios.get(BACKEND_URL +'/api/v1/content',{
              headers:{
-                "Authorization":localStorage.getItem("token")
+                "Authorization":sessionStorage.getItem("token")
              }
          })
           .then((response)=>

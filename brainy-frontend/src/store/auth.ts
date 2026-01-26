@@ -1,6 +1,6 @@
 import api from "@/lib/api";
 import { create } from "zustand"
-import { persist } from "zustand/middleware";
+import { persist,createJSONStorage } from "zustand/middleware";
 interface User {
     id: string
     username: string
@@ -11,12 +11,13 @@ interface AuthState {
     isAuthenticated: boolean
     isLoading:boolean
     error: string | null
-
+    hasHydrated: boolean 
     //Actions
     login:(username:string,password:string)=>Promise<void>
     signup:(username:string ,password: string)=>Promise<void>
     logout: ()=>void
     clearError:()=>void
+    setHasHydrated :() => void
 }
 export const useAuthStore =create<AuthState>()(
     persist(
@@ -26,7 +27,9 @@ export const useAuthStore =create<AuthState>()(
             isAuthenticated:false,
             isLoading:false,
             error:null,
-
+            hasHydrated: false,
+            setHasHydrated: () => set({ hasHydrated: true }),
+      
             login: async(username:string,password:string)=>{
                 set({ isLoading: true,error:null})
                 try{
@@ -36,7 +39,7 @@ export const useAuthStore =create<AuthState>()(
                     })
                     const { token }=response.data
                     // store token in LocalStorage for API interceptor
-                    localStorage.setItem("token",token)
+                    sessionStorage.setItem("token",token)
 
                     //Decode username from response or token
                     set({
@@ -70,7 +73,7 @@ export const useAuthStore =create<AuthState>()(
       },
 
       logout: () => {
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         set({
           user: null,
           token: null,
@@ -83,11 +86,16 @@ export const useAuthStore =create<AuthState>()(
     }),
     {// without partialize Zustand will save everything from persist:isLoading ❌ error ❌ temporary UI state ❌ This causes: .stale loading state after refresh .error messages reappearing .bad UX
       name: "auth-storage",
+      storage: createJSONStorage(() => sessionStorage),
       partialize: (state) => ({
         token: state.token,
         user: state.user,
         isAuthenticated: state.isAuthenticated,
       }),
+      onRehydrateStorage: () => (state: AuthState | undefined) => {
+       state?.setHasHydrated();
+      },  
     }
+  
   )
 );

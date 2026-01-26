@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/store/auth"
 import axios from "axios"
 
 const API_BASE_URL =
@@ -29,9 +30,9 @@ api.interceptors.response.use(
     (response)=> response,
     (error)=>{
         if(error.response?.status===401 || error.response?.status === 403){
-            //token is invalid or expired
-            localStorage.removeItem("token");
-            window.location.href = "/auth";
+            // Backend says token is invalid → update frontend state
+      useAuthStore.getState().logout();
+           
         }
         return Promise.reject(error)
     }

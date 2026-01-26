@@ -8,20 +8,20 @@ import { ThemeToggle } from "@/components/ui/themetoggle";
 import { useAuthStore } from "@/store/auth";
 import { Brain } from "lucide-react";
 
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import {  useState } from "react"
+import { Navigate  } from "react-router-dom"
 import { toast } from "sonner";
 export const AuthPage : React.FC =()=>{
-    const navigate=useNavigate()
-    const {login,signup,isAuthenticated,isLoading,error, clearError }=useAuthStore()
+   
+    const {login,signup,isAuthenticated,isLoading,error, clearError,hasHydrated  }=useAuthStore()
     const [ username,setUsername]=useState("")
     const [password,setPassword]=useState("")
-    //Redirect the user to the homepage if they are already authenticated
-    useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
+  
+
+if (hasHydrated && isAuthenticated) {
+  return <Navigate to="/" replace />;
+}
+
    // Clears form fields and errors when switching between Login and Sign Up tabs
    const handleTabChange = () => {
     setUsername("");
@@ -48,8 +48,7 @@ export const AuthPage : React.FC =()=>{
       toast.success(
         action === "login" ? "Logged in successfully!" : "Account created!"
       );
-      navigate("/"); // Navigate to home on success
-    } catch (err) {
+    } catch (err) { 
       // The error is set in the auth store; show it in a toast for immediate feedback.
       const latestError = useAuthStore.getState().error;
       toast.error(latestError || "An unexpected error occurred.");
