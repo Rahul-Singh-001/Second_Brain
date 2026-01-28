@@ -94,6 +94,7 @@ export const useAuthStore =create<AuthState>()(
       }),
       onRehydrateStorage: () => (state: AuthState | undefined) => {
        state?.setHasHydrated();
+       
       },  
     }
   
