@@ -9,18 +9,16 @@ import { useAuthStore } from "@/store/auth";
 import { Brain } from "lucide-react";
 
 import {  useState } from "react"
-import { Navigate  } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner";
 export const AuthPage : React.FC =()=>{
-   
-    const {login,signup,isAuthenticated,isLoading,error, clearError,hasHydrated  }=useAuthStore()
+    const navigate = useNavigate();
+    const {login,signup,isLoading,error, clearError  }=useAuthStore()
     const [ username,setUsername]=useState("")
     const [password,setPassword]=useState("")
   
 
-if (hasHydrated && isAuthenticated) {
-  return <Navigate to="/" replace />;
-}
+
 
    // Clears form fields and errors when switching between Login and Sign Up tabs
    const handleTabChange = () => {
@@ -48,6 +46,7 @@ if (hasHydrated && isAuthenticated) {
       toast.success(
         action === "login" ? "Logged in successfully!" : "Account created!"
       );
+      navigate("/", { replace: true });
     } catch (err) { 
       // The error is set in the auth store; show it in a toast for immediate feedback.
       const latestError = useAuthStore.getState().error;
@@ -77,7 +76,7 @@ if (hasHydrated && isAuthenticated) {
                     <TabsContent value="login">
                         <Card>
                      <form onSubmit={(e)=>handleSubmit("login",e)} >
-                                <CardHeader>
+                           <CardHeader>
                                     <CardTitle>Welcome Back</CardTitle>
                                     <CardDescription>
                                         Enter Your credentials to access your account.
@@ -92,7 +91,7 @@ if (hasHydrated && isAuthenticated) {
                                        onChange={(e)=> setUsername(e.target.value)}
                                        placeholder="Enter your Username"
                                        required
-                                       autoComplete="username"/>
+                                       autoComplete="off"/>
                                    </div>
                                    <div className="space-y-2">
                                      <Label htmlFor="login-password">Password</Label>
@@ -101,8 +100,9 @@ if (hasHydrated && isAuthenticated) {
                                       type="password"
                                       value={password}
                                       onChange={(e)=>setPassword(e.target.value)}
+                                      placeholder="Enter Password"
                                       required
-                                      autoComplete="current-password"/>
+                                      autoComplete="new-password"/>
                                     </div>
                                    {error && (
                                     <p className="text-sm font-medium text-red-500 dark:text-red-400">
@@ -122,6 +122,7 @@ if (hasHydrated && isAuthenticated) {
                     <TabsContent value="signup">
                         <Card>
                             <form onSubmit={(e)=>handleSubmit("signup",e)} >
+                              
                                 <CardHeader>
                                     <CardTitle>Create an Account</CardTitle>
                                     <CardDescription>
