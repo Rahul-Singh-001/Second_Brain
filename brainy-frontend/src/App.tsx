@@ -6,7 +6,6 @@ import { SharePage } from "./pages/SharePage";
 import { ProtectedRoute } from "@/components/protectedRoute";
 import { PublicRoute } from "./components/PublicRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { useAuthStore } from "@/store/auth";
 
 function App() {
   
