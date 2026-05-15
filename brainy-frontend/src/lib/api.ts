@@ -3,7 +3,8 @@ import axios from "axios"
 //It uses an environment variable if available, otherwise falls back to localhost.
 // VITE_API_URL is a frontend variable that tells Axios where your backend lives.
 const API_BASE_URL =
-   import.meta.env.VITE_API_URL || "https://second-brain-c5qm.onrender.com"
+  import.meta.env.VITE_API_URL ||
+  "https://second-brain-c5qm.onrender.com/api/v1";
 // import.meta.env=> This is Vite’s way of accessing environment variables.
 // process.env => in Node.
 const api =axios.create({
